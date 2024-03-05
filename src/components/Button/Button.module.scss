@@ -11,7 +11,7 @@
     user-select: none;
     font-size: 1.6rem;
     font-weight: 700;
-    font-family: 'IBMPlexSans', sans-serif;
+    font-family: var(--font-family);
 
     + .wrapper {
         margin-left: 8px;

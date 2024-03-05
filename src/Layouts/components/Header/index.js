@@ -1,17 +1,12 @@
-import { useEffect, useState } from 'react';
-
 import classNames from 'classnames/bind';
 import {
     faCircleQuestion,
-    faCircleXmark,
     faCoins,
     faEarthAsia,
     faEllipsisVertical,
     faGear,
     faKeyboard,
-    faMagnifyingGlass,
     faSignOut,
-    faSpinner,
     faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,14 +14,14 @@ import styles from './Header.module.scss';
 import images from '~/assets/images';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import HeadlessTippy from '@tippyjs/react/headless';
+import { Link } from 'react-router-dom';
 
-import { Wrapper as PopperWrapper } from '~/components/Popper';
-import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
 import { InboxIcon, MessageIcon, UploadIcon } from '~/components/Icons';
 import Image from '~/components/Image';
+import Search from '../Search';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -62,21 +57,7 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
-    const [inputValue, setInputvalue] = useState('');
-    const [searchResult, setSearchResult] = useState([]);
-
     const currentUser = true;
-
-    // Remove search
-    const handleCloseClick = () => {
-        setInputvalue('');
-    };
-
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([1, 2, 3]);
-        }, 0);
-    });
 
     // Handle logic
     const handelMenuChange = (menuItem) => {
@@ -117,39 +98,12 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <div className={cx('logo')}>
-                    <img src={images.logo} alt="Tiktok"></img>
+                    <Link to={config.routes.home} className={cx('logo-link')}>
+                        <img src={images.logo} alt="Tiktok"></img>
+                    </Link>
                 </div>
-                <HeadlessTippy
-                    interactive
-                    visible={searchResult.length > 0}
-                    render={(attrs) => (
-                        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Accounts</h4>
-                                <AccountItem />
-                            </PopperWrapper>
-                        </div>
-                    )}
-                >
-                    <div className={cx('search')}>
-                        <input
-                            placeholder="Search account and video"
-                            spellCheck={false}
-                            value={inputValue}
-                            onChange={(e) => setInputvalue(e.target.value.trim())}
-                        />
-                        {inputValue !== '' && (
-                            <button className={cx('clear')} onClick={handleCloseClick}>
-                                <FontAwesomeIcon icon={faCircleXmark} />
-                            </button>
-                        )}
-                        <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
 
-                        <button className={cx('search-btn')}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </button>
-                    </div>
-                </HeadlessTippy>
+                <Search />
 
                 <div className={cx('actions')}>
                     {currentUser ? (
@@ -169,6 +123,7 @@ function Header() {
                             <Tippy delay={200} content="Inbox" placement="bottom">
                                 <button className={cx('action-btn')}>
                                     <InboxIcon />
+                                    <span className={cx('badge')}>12</span>
                                 </button>
                             </Tippy>
                         </>
@@ -181,7 +136,7 @@ function Header() {
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handelMenuChange}>
                         {currentUser ? (
                             <Image
-                                src="ahttps://play-lh.googleusercontent.com/4qAz40o6M5w6hJ62VsjwGbYueB0fRWPmiG1yOZpNHn3qo2uzlhZZ1mwE5jtBlPp3Lw"
+                                src="https://play-lh.googleusercontent.com/4qAz40o6M5w6hJ62VsjwGbYueB0fRWPmiG1yOZpNHn3qo2uzlhZZ1mwE5jtBlPp3Lw"
                                 className={cx('user-avatar')}
                                 alt="Ten"
                                 //fallBack="https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4650324.jpg"

@@ -11,6 +11,10 @@
     padding-bottom: 8px;
 }
 
+.menu-body {
+    overflow-y: auto;
+}
+
 //MenuItem
 .menu-item {
     width: 100%;
@@ -19,7 +23,7 @@
     font-weight: 600;
     padding: 11px 16px;
     line-height: 1.8rem;
-    font-family: 'IBMPlexSans', sans-serif;
+    font-family: var(--font-family);
     color: var(--text-color);
 
     &:hover {
@@ -36,6 +40,7 @@
     position: relative;
     height: 50px;
     margin-top: -8px;
+    flex-shrink: 0;
 }
 .back-btn {
     width: 50px;
